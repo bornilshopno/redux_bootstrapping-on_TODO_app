@@ -11,6 +11,7 @@ import {
 } from "@/components/ui/dialog"
 import { Form, FormControl, FormField, FormItem, FormLabel } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
+import { Textarea } from "@/components/ui/textarea"
 import { useForm } from "react-hook-form"
 // import { Input } from "@/components/ui/input"
 // import { Label } from "@/components/ui/label"
@@ -24,14 +25,14 @@ export function AddTaskModal() {
         <Dialog>
             <form>
                 <DialogTrigger asChild>
-                    <Button >Add Task</Button>
+                    <Button variant='default' className="bg-green-500">Add Task</Button>
                 </DialogTrigger>
                 <DialogContent className="sm:max-w-[425px]">
                     <DialogHeader>
                         <DialogTitle>Add Task</DialogTitle>
-                        <DialogDescription>
-                            Make changes to your profile here. Click save when you&apos;re
-                            done.
+                        <DialogDescription className="sr-only">
+                            {/* "sr-only" makes it out of screen and for screen read only */}
+                            Fill Up this form to Add Task 
                         </DialogDescription>
                     </DialogHeader>
                     {/* forms */}
@@ -39,13 +40,13 @@ export function AddTaskModal() {
 
                     <Form{...form} >
 
-                        <form onSubmit={form.handleSubmit(onSubmit)}>
-                            <FormField
+                        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
+                            <FormField 
                                 control={form.control}
                                 name="title"
                                 render={({field}) => (
                                     <FormItem>
-                                        <FormLabel />
+                                           <FormLabel>Title</FormLabel>
                                         <FormControl>
                                             <Input {...field} />
                                         </FormControl>
@@ -54,7 +55,21 @@ export function AddTaskModal() {
                                 )}
                             />
 
-                                                    <DialogFooter>
+                               <FormField
+                                control={form.control}
+                                name="description"
+                                render={({field}) => (
+                                    <FormItem>
+                                        <FormLabel>Description</FormLabel>
+                                        <FormControl>
+                                            <Textarea {...field} />
+                                        </FormControl>
+
+                                    </FormItem>
+                                )}
+                            />
+
+                        <DialogFooter className="mt-5">
                             <DialogClose asChild>
                                 <Button variant="outline">Cancel</Button>
                             </DialogClose>
