@@ -1,4 +1,5 @@
-import { Button } from "./components/ui/button"
+import { Outlet } from "react-router"
+import Navbar from "./components/layout/Navbar"
 
 
 function App() {
@@ -6,8 +7,8 @@ function App() {
 
   return (
     <>
-     <h1>TO DO APP</h1>
-     <Button> Add Me </Button>
+      <Navbar />
+      <Outlet />
     </>
   )
 }
