@@ -1,6 +1,7 @@
 import type { RootState } from "@/redux/store";
 import type { Itask } from "@/types";
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
+import { v4 as uuidv4 } from 'uuid';
 
 interface IinitialState {
     tasks: Itask[];
@@ -25,15 +26,20 @@ const initialState: IinitialState = {
         isCompleted: false,
         priority: "Medium"
     }
-],
-filter: 'all'
+    ],
+    filter: 'all'
 }
 
 const todoSlice = createSlice({
     name: "tasks",
     initialState,
     reducers: {
-        // addTodo:(state,action)=>{ state.count= state.count+ action.payload}
+        addTask: (state, action:PayloadAction<Itask>) => {
+            const id= uuidv4();
+            const taskData={...action.payload, id, isCompleted:false}
+            state.tasks.push(taskData)
+        }
+     
 
     }
 })
@@ -41,4 +47,6 @@ const todoSlice = createSlice({
 // export const {addTodo}= todoSlice.actions
 export const selectTask = (state: RootState) => state.todo.tasks
 export const selectFilter = (state: RootState) => state.todo.filter
+
+export const {addTask}= todoSlice.actions
 export default todoSlice.reducer
