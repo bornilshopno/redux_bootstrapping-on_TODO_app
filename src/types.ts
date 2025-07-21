@@ -5,6 +5,7 @@ export interface Itask {
     dueDate: string;
     isCompleted: boolean;
     priority: "High" | "Medium" | "Low";
+    assignedUser:string | null;
 }
 
 export interface IUser{

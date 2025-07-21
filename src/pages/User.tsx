@@ -1,12 +1,12 @@
 import AddUserModal from "@/components/module/users/AddUserModal"
 import UserCard from "@/components/module/users/userCard"
 import { selectUsers } from "@/redux/features/users/userSlice"
-import { useAppDispatch, useAppSelector } from "@/redux/hooks/hooks"
+import {  useAppSelector } from "@/redux/hooks/hooks"
 
 
 export const User = () => {
     const users = useAppSelector(selectUsers)
-    const dispatch=useAppDispatch()      
+    // const dispatch=useAppDispatch()      
 
   return (
      <div className="mx-auto max-w-7xl px-5 mt-20">

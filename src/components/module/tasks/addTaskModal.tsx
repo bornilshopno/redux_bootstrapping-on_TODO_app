@@ -10,14 +10,15 @@ import {
     DialogTitle,
     DialogTrigger,
 } from "@/components/ui/dialog"
-import { Form, FormControl,  FormField, FormItem, FormLabel } from "@/components/ui/form"
+import { Form, FormControl, FormField, FormItem, FormLabel } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Textarea } from "@/components/ui/textarea"
 import { cn } from "@/lib/utils"
 import { addTask } from "@/redux/features/tasks/taskSlice"
-import { useAppDispatch } from "@/redux/hooks/hooks"
+import { selectUsers } from "@/redux/features/users/userSlice"
+import { useAppDispatch, useAppSelector } from "@/redux/hooks/hooks"
 import type { Itask } from "@/types"
 import { format } from "date-fns"
 import { CalendarIcon } from "lucide-react"
@@ -28,9 +29,10 @@ import { useForm, type FieldValues, type SubmitHandler } from "react-hook-form"
 
 export function AddTaskModal() {
     const form = useForm();
-    const dispatch= useAppDispatch();
+    const dispatch = useAppDispatch();
+    const users=useAppSelector(selectUsers)
     const onSubmit: SubmitHandler<FieldValues> = (data) => {
-        console.log(data);
+        console.log(data, 'from onSubmit');
         dispatch(addTask(data as Itask))
     }
     return (
@@ -80,6 +82,34 @@ export function AddTaskModal() {
                                     </FormItem>
                                 )}
                             />
+
+                            <FormField
+                                control={form.control}
+                                name="assignedUser"
+                                render={({ field }) => (
+                                    <FormItem >
+                                        <FormLabel>Assigned User</FormLabel>
+                                        <Select onValueChange={field.onChange} defaultValue={field.value} >
+                                            <FormControl>
+                                                <SelectTrigger>
+                                                    <SelectValue placeholder="Select User" />
+                                                </SelectTrigger>
+                                            </FormControl>
+                                            <SelectContent className="w-full" >
+                                                {/* <SelectItem value="Low">Low</SelectItem>
+                                                <SelectItem value="Medium">Medium</SelectItem>
+                                                <SelectItem value="High">High</SelectItem> */}
+
+                                                {users?.map((user)=>
+                                                <SelectItem key={user.id} value={user.id}>{user.name}</SelectItem>)}
+                                            </SelectContent>
+                                        </Select>
+
+
+                                    </FormItem>
+                                )}
+                            />
+
 
                             <FormField
                                 control={form.control}
@@ -142,7 +172,7 @@ export function AddTaskModal() {
                                                 />
                                             </PopoverContent>
                                         </Popover>
-                                       
+
                                     </FormItem>
                                 )}
                             />

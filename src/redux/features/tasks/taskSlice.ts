@@ -31,7 +31,7 @@ const initialState: IinitialState = {
 }
 
 
-type DraftTask = Pick<Itask, 'title' | 'description' | 'dueDate' | 'priority'>
+type DraftTask = Pick<Itask, 'title' | 'description' | 'dueDate' | 'priority'|'assignedUser'>
 
 const createTask = (taskData: DraftTask): Itask => {
     return {
@@ -46,6 +46,7 @@ const todoSlice = createSlice({
     reducers: {
         addTask: (state, action: PayloadAction<Itask>) => {
             const taskData = createTask(action.payload)
+            console.log(action.payload)
             state.tasks.push(taskData)
         },
 
