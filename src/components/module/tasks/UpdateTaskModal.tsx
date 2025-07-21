@@ -20,15 +20,15 @@ import { addTask } from "@/redux/features/tasks/taskSlice"
 import { useAppDispatch } from "@/redux/hooks/hooks"
 import type { Itask } from "@/types"
 import { format } from "date-fns"
-import { CalendarIcon } from "lucide-react"
+import { Blocks, CalendarIcon } from "lucide-react"
 
 import { useForm, type FieldValues, type SubmitHandler } from "react-hook-form"
 // import { Input } from "@/components/ui/input"
 // import { Label } from "@/components/ui/label"
 
-export function AddTaskModal() {
+export function UpdateTaskModal({selectedTask}: Itask) {
     const form = useForm();
-    const dispatch= useAppDispatch();
+    const dispatch= useAppDispatch(); 
     const onSubmit: SubmitHandler<FieldValues> = (data) => {
         console.log(data);
         dispatch(addTask(data as Itask))
@@ -37,7 +37,9 @@ export function AddTaskModal() {
         <Dialog>
             <form>
                 <DialogTrigger asChild>
-                    <Button variant='default' className="bg-green-500">Add Task</Button>
+                    <Button variant='link' className="p-0 text-blue-500">
+                    <Blocks />
+                    </Button>
                 </DialogTrigger>
                 <DialogContent className="sm:max-w-[425px]">
                     <DialogHeader>

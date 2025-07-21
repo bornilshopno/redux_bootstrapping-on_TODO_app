@@ -1,6 +1,8 @@
 # React + TypeScript + Vite
 
-- form is working
+- form is working 
+- uuid (npm package)
+- nanoid from redux
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
