@@ -5,7 +5,7 @@ import { createSlice, nanoid, type PayloadAction } from "@reduxjs/toolkit";
 
 interface IinitialState {
     tasks: Itask[];
-    filter: "all" | 'High' | 'Medium' | 'Low'
+    filter: "All" | 'High' | 'Medium' | 'Low'
 }
 
 const initialState: IinitialState = {
@@ -27,7 +27,7 @@ const initialState: IinitialState = {
     //     priority: "Medium"
     // }
     // ],
-    filter: 'all'
+    filter: 'All'
 }
 
 
@@ -55,9 +55,14 @@ const todoSlice = createSlice({
         deleteTask: (state, action: PayloadAction<string>) => {
             state.tasks = state.tasks.filter((task) => task.id !== action.payload)
         },
-        updateTask: (state,action:PayloadAction<Itask> )=>{
-            state.tasks.forEach((task)=>task.id === action.payload.id ? action.payload : task)
-
+        updateTask: (state, action: PayloadAction<Itask>) => {
+            const index = state.tasks.findIndex(task => task.id === action.payload.id);
+            if (index !== -1) {
+                state.tasks[index] = action.payload;
+            }
+        },
+        updateFilter: (state, action: PayloadAction<'High' | 'Medium' | 'Low' | 'All'>) => {
+            state.filter = action.payload;
         }
 
 
@@ -65,8 +70,21 @@ const todoSlice = createSlice({
 })
 
 
-export const selectTask = (state: RootState) => state.todo.tasks
+export const selectTask = (state: RootState) => {
+const filter = state.todo.filter;
+if (filter==='Low'){
+    return state.todo.tasks.filter((task)=>task.priority==='Low')
+}
+if (filter==='Medium'){
+    return state.todo.tasks.filter((task)=>task.priority==='Medium')
+}
+if (filter==='High'){
+    return state.todo.tasks.filter((task)=>task.priority==='High')
+}
+    return state.todo.tasks
+
+}
 export const selectFilter = (state: RootState) => state.todo.filter
 
-export const { addTask, toggleCompleted , deleteTask } = todoSlice.actions
+export const { addTask, toggleCompleted, deleteTask, updateTask, updateFilter } = todoSlice.actions
 export default todoSlice.reducer
