@@ -1,6 +1,7 @@
 import type { RootState } from "@/redux/store";
 import type { Itask } from "@/types";
 import { createSlice, nanoid, type PayloadAction } from "@reduxjs/toolkit";
+import { removeUser } from "../users/userSlice";
 
 
 interface IinitialState {
@@ -37,7 +38,8 @@ const createTask = (taskData: DraftTask): Itask => {
     return {
         id: nanoid(),
         isCompleted: false,
-        ...taskData
+        ...taskData,
+        assignedUser:taskData.assignedUser? taskData.assignedUser : null ,
     }
 }
 const todoSlice = createSlice({
@@ -67,6 +69,11 @@ const todoSlice = createSlice({
         }
 
 
+    },
+    extraReducers:(builder)=>{
+        builder.addCase(removeUser,(state,action)=>{
+            state.tasks.forEach((task)=> task.assignedUser===action.payload ? (task.assignedUser=null) : task)
+        })
     }
 })
 

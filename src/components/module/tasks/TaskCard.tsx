@@ -17,7 +17,7 @@ interface IProps{
 const TaskCard = ({task}:IProps) => {
     const dispatch=useAppDispatch();
     const users=useAppSelector(selectUsers)
-    const assignedTaskUser= users?.filter((user)=>user.id===task.assignedUser)
+    const assignedTaskUser= users?.find((user)=>user.id===task.assignedUser)
     console.log(assignedTaskUser)
     return (
         <div className="border px-5 py-3 rounded-md">
@@ -31,7 +31,7 @@ const TaskCard = ({task}:IProps) => {
                     </div>
                  <div>
                        <h1 className={cn({"line-through": task.isCompleted})}>{task.title}</h1>
-                    <h2 className="text-blue-500">Assigned to: {assignedTaskUser[0].name} </h2>
+                    <h2 className="text-blue-500">Assigned to: {assignedTaskUser ? assignedTaskUser?.name : "None" } </h2>
                  </div>
                 </div>
                 <div className="flex gap-3 items-center">
